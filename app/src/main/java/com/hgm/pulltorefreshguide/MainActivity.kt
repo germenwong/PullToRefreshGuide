@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -41,12 +42,14 @@ class MainActivity : ComponentActivity() {
                                     mutableStateOf(false)
                               }
                               val scope = rememberCoroutineScope()
+                              val lazyListState= rememberLazyListState()
 
                               Box(
                                     modifier = Modifier.fillMaxSize()
                               ) {
                                     PullToRefreshLazyColumn(
                                           items = items,
+                                          lazyListState = lazyListState,
                                           content = { title ->
                                                 Text(
                                                       text = title,
@@ -60,6 +63,7 @@ class MainActivity : ComponentActivity() {
                                                       // 模拟网络请求，刷新数据
                                                       delay(3000L)
                                                       isRefreshing = false
+                                                      lazyListState.animateScrollToItem(0)
                                                 }
                                                 Log.i("TAG", "onRefresh: 刷新执行了")
                                           }
