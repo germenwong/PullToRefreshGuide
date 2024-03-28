@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
                                           isRefreshing = isRefreshing,
                                           onRefresh = {
                                                 scope.launch {
+                                                      isRefreshing=true
                                                       // 模拟网络请求，刷新数据
                                                       delay(3000L)
                                                       isRefreshing = false
